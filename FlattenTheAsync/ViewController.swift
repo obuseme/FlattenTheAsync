@@ -9,12 +9,18 @@
 import UIKit
 
 class ViewController: UIViewController {
+    var animator: Animator = UIView()
+    @IBOutlet var onOffLabel: UILabel!
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
+    @IBAction func switchToggled(_ sender: UISwitch) {
+        type(of: animator).animate(withDuration: 0.5) {
+            self.onOffLabel.alpha = sender.isOn ? 1.0 : 0.0
+        }
     }
-
-
 }
 
+protocol Animator {
+    static func animate(withDuration duration: TimeInterval, animations: @escaping () -> Void)
+}
+
+extension UIView: Animator { }
